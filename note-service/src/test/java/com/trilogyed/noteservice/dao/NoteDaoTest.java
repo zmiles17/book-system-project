@@ -1,5 +1,6 @@
 package com.trilogyed.noteservice.dao;
 
+import com.trilogyed.noteservice.model.Note;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,15 +11,11 @@ public class NoteDaoTest {
     @Before
     public void setUp() throws Exception {
 
-
     }
 
     @Test
-    public void addNote() {
-    }
+    public void addGetDeleteNote() {
 
-    @Test
-    public void getNote() {
     }
 
     @Test
@@ -33,7 +30,6 @@ public class NoteDaoTest {
     public void updateNote() {
     }
 
-    @Test
-    public void deleteNote() {
+    public Note generateTestNote1(){
     }
 }
