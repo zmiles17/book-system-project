@@ -9,6 +9,8 @@ public class NoteDaoTest {
 
     @Before
     public void setUp() throws Exception {
+
+
     }
 
     @Test
