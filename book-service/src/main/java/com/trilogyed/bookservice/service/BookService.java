@@ -13,14 +13,14 @@ import java.util.List;
 @Component
 public class BookService {
 
-    private final NoteClient client;
+//    private final NoteClient client
 
     BookDao dao;
 
     @Autowired
-    public BookService(BookDao dao, NoteClient client) {
+    public BookService(BookDao dao) {
         this.dao = dao;
-        this.client = client;
+//        this.client = client;
     }
 
     public BookViewModel newBook(BookViewModel bookViewModel) {
