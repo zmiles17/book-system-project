@@ -19,11 +19,13 @@ public class MessageListener {
     @RabbitListener(queues = NoteQueueConsumerApplication.QUEUE_NAME)
     public void receiveMessage(Note note) {
        if(note.getNoteId()==0){
-             client.createNote(note);
+             client.addNote(note);
+           System.out.println(note.toString());
        }
        else
        {
             client.updateNote(note,note.getNoteId());
+           System.out.println(note.toString());
        }
     }
 
