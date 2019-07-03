@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/note")
+@RequestMapping("/notes")
 public class NoteController {
 
     @Autowired

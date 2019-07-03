@@ -15,7 +15,7 @@ public interface NoteClient {
     public Note createNote(@RequestBody Note note);
 
     @RequestMapping(value = "/note/{id}", method = RequestMethod.PUT)
-    public void updateNote(@RequestBody Note note, @PathVariable("id") int id);
+    public void updateNote(@PathVariable("id") int id, @RequestBody Note note);
 
     @RequestMapping(value = "/note", method = RequestMethod.GET)
     public List<Note> getAllNotes();

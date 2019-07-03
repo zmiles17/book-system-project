@@ -8,7 +8,6 @@ import com.trilogyed.bookservice.util.notes.Note;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,6 @@ public class BookService {
         book = dao.addBook(book);
         bookViewModel.setBook_id(book.getBook_id());
 
-        //call note service through rabbitq to add a note
         String notes ="New book added";
         Note note = new Note(book.getBook_id(),notes);
         System.out.println("Sending message...");
@@ -48,7 +46,6 @@ public class BookService {
         List<Note> noteList=new ArrayList<>();
         noteList.add(note);
         bookViewModel.setNotes(noteList);
-        ///////////////////////////
 
         return bookViewModel;
     }
@@ -71,28 +68,28 @@ public class BookService {
         return bvmList;
     }
 
-    public BookViewModel deleteBook(int id) {
-        BookViewModel bvm = buildBookViewModel(dao.getBook(id));
+    public void deleteBook(int id) {
         dao.deleteBook(id);
-        return bvm;
     }
 
-    public BookViewModel updateBook(BookViewModel bookViewModel) {
+    public void updateBook(BookViewModel bookViewModel) {
         Book book = new Book(
                 bookViewModel.getBook_id(),
                 bookViewModel.getTitle(),
                 bookViewModel.getAuthor()
         );
+        //I'm not understanding this part - Zack
         int increment=0;
         List<Note> noteList = client.getAllNotes();
         noteList= noteList.stream().filter(note->note.getBookId()==bookViewModel.getBook_id()).collect(Collectors.toList());
         for(Note note:noteList){
             note.setNote("note updated.." + increment++);
-            client.updateNote(note, note.getNoteId());
+            client.updateNote(note.getNoteId(), note);
             rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, note);
         }
+        // ------------------------------------------------------------------
         bookViewModel.setNotes(noteList);
-        return buildBookViewModel(dao.updateBook(book));
+        dao.updateBook(book);
     }
 
     private BookViewModel buildBookViewModel(Book book) {
@@ -100,7 +97,6 @@ public class BookService {
         bvm.setBook_id(book.getBook_id());
         bvm.setTitle(book.getTitle());
         bvm.setAuthor(book.getAuthor());
-        //get notes from note service
         List<Note> noteList = client.getAllNotes();
         noteList= noteList.stream().filter(note->note.getBookId()==book.getBook_id()).collect(Collectors.toList());
         bvm.setNotes(noteList);

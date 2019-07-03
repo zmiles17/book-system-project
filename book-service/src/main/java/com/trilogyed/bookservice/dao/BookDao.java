@@ -12,8 +12,8 @@ public interface BookDao {
 
     public Book getBook(int book_id);
 
-    public Book updateBook(Book book);
+    public void updateBook(Book book);
 
-    public Book deleteBook(int book_id);
+    public void deleteBook(int book_id);
 
 }
