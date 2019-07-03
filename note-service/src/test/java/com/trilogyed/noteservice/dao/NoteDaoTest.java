@@ -48,7 +48,7 @@ public class NoteDaoTest {
         Note note = generateTestNote1();
         dao.addNote(note);
 
-        List<Note> noteList = dao.getNoteByBook(42);
+        List<Note> noteList = dao.getNotesByBook(42);
 
         assertEquals(note, noteList.get(0));
     }
@@ -62,7 +62,7 @@ public class NoteDaoTest {
         dao.addNote(note2);
         dao.addNote(note3);
 
-        List<Note> noteList = dao.getNoteByBook(20);
+        List<Note> noteList = dao.getNotesByBook(20);
 
         assertEquals(2, noteList.size());
     }

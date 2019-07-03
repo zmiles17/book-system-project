@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/book-service/book-service.iml" filepath="$PROJECT_DIR$/book-service/book-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book-system-config-server/book-system-config-server.iml" filepath="$PROJECT_DIR$/book-system-config-server/book-system-config-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/book-system-project.iml" filepath="$PROJECT_DIR$/.idea/book-system-project.iml" />
       <module fileurl="file://$PROJECT_DIR$/note-service/note-service.iml" filepath="$PROJECT_DIR$/note-service/note-service.iml" />
     </modules>
