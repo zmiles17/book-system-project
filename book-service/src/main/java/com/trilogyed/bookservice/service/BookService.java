@@ -18,7 +18,7 @@ public class BookService {
     BookDao dao;
 
     @Autowired
-    public BookService(BookDao dao) {
+    public BookService(BookDao dao /*,NoteClient client*/) {
         this.dao = dao;
 //        this.client = client;
     }
