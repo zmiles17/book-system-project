@@ -3,7 +3,10 @@ package com.trilogyed.bookservice.service;
 import com.trilogyed.bookservice.dao.BookDao;
 import com.trilogyed.bookservice.dao.BookDaoJdbcTemplateImpl;
 import com.trilogyed.bookservice.model.Book;
+import com.trilogyed.bookservice.model.BookViewModel;
+import com.trilogyed.bookservice.util.feign.NoteClient;
 import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +18,13 @@ import static org.mockito.Mockito.doReturn;
 public class BookServiceTests {
 
     BookDao bookDao;
+    NoteClient noteClient;
+    BookService bookService;
 
     @Before
     public void setUp() throws Exception {
 
+        this.bookService = new BookService(bookDao);
         setUpBookDaoMock();
 
     }
@@ -41,20 +47,16 @@ public class BookServiceTests {
 
     }
 
-    private void saveBook() {
+    @Test
+    public void newBook() {
 
-        Book book = new Book(5, "Title", "Author");
+        BookViewModel book = new BookViewModel();
 
-        book = BookService.saveBook(book);
-        Book fromService = BookService.getBook(book.getBook_id());
+        book = bookService.newBook(book);
+        BookViewModel fromService = bookService.fetchBook(book.getBook_id());
         assertEquals(book, fromService);
 
     }
 
-    private void getBooksByAuthor() {
-
-        
-
-    }
 
 }

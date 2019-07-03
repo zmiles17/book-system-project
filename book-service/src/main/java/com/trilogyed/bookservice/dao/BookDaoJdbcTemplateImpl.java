@@ -74,17 +74,14 @@ public class BookDaoJdbcTemplateImpl implements BookDao {
     @Override
     public Book updateBook(Book book) {
 
-        jdbcTemplate.update(UPDATE_BOOK,
-                book.getTitle(),
-                book.getAuthor(),
-                book.getBook_id()
-        );
-
         try {
 
+            jdbcTemplate.update(UPDATE_BOOK,
+                    book.getTitle(),
+                    book.getAuthor(),
+                    book.getBook_id()
+            );
             book = jdbcTemplate.queryForObject(SELECT_BOOK, this::mapRowToBook, book.getBook_id());
-            jdbcTemplate.update(DELETE_BOOK, book.getBook_id());
-
             return book;
 
         } catch (EmptyResultDataAccessException ex) {
