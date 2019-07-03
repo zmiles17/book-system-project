@@ -1,14 +1,10 @@
 package com.trilogyed.noteservice.model;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 public class Note {
 
-    @Min(0)
     private int noteId;
-    @Min(0)
     private int bookId;
     private String note;
 

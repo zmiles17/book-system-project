@@ -7,7 +7,7 @@ import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
@@ -32,9 +32,10 @@ public class NoteQueueConsumerApplication {
 	}
 
 	@Bean
-	public Jackson2JsonMessageConverter jackson2JsonMessageConverter() {
+    public Jackson2JsonMessageConverter jackson2JsonMessageConverter() {
 		return new Jackson2JsonMessageConverter();
 	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(NoteQueueConsumerApplication.class, args);
 	}

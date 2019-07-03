@@ -8,6 +8,7 @@ import com.trilogyed.bookservice.util.notes.Note;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,34 +19,26 @@ public class BookService {
     public static final String EXCHANGE = "note-exchange";
     public static final String ROUTING_KEY = "note.#";
 
-    @Autowired
-    private NoteClient client;
+    private final NoteClient client;
 
     BookDao dao;
 
-    @Autowired
     private RabbitTemplate rabbitTemplate;
 
     @Autowired
-    public BookService(BookDao dao) {
-        this.dao = dao;
-    }
-
-    public BookService(NoteClient client) {
+    public BookService(NoteClient client, BookDao dao, RabbitTemplate rabbitTemplate) {
         this.client = client;
-    }
-
-    public BookService(RabbitTemplate rabbitTemplate) {
+        this.dao = dao;
         this.rabbitTemplate = rabbitTemplate;
     }
 
     public BookViewModel newBook(BookViewModel bookViewModel) {
-        Book book = new Book(
-                bookViewModel.getBook_id(),
-                bookViewModel.getTitle(),
-                bookViewModel.getAuthor()
-                );
+        Book book = new Book();
+        book.setTitle(bookViewModel.getTitle());
+        book.setAuthor(bookViewModel.getAuthor());
         book = dao.addBook(book);
+        bookViewModel.setBook_id(book.getBook_id());
+
         //call note service through rabbitq to add a note
         String notes ="New book added";
         Note note = new Note(book.getBook_id(),notes);
@@ -57,7 +50,6 @@ public class BookService {
         bookViewModel.setNotes(noteList);
         ///////////////////////////
 
-        bookViewModel.setBook_id(book.getBook_id());
         return bookViewModel;
     }
 
@@ -95,8 +87,8 @@ public class BookService {
         List<Note> noteList = client.getAllNotes();
         noteList= noteList.stream().filter(note->note.getBookId()==bookViewModel.getBook_id()).collect(Collectors.toList());
         for(Note note:noteList){
-            note.setNote("note upated.." + increment++);
-           // client.updateNote(note,note.getNoteId());
+            note.setNote("note updated.." + increment++);
+            client.updateNote(note, note.getNoteId());
             rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, note);
         }
         bookViewModel.setNotes(noteList);
