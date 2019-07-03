@@ -7,6 +7,8 @@ import com.trilogyed.bookservice.model.BookViewModel;
 import com.trilogyed.bookservice.util.feign.NoteClient;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +20,19 @@ import static org.mockito.Mockito.doReturn;
 public class BookServiceTests {
 
     BookDao bookDao;
-    NoteClient noteClient;
+    @Mock
+    NoteClient noteClient = mock(NoteClient.class);
+
+    @Mock
+    RabbitTemplate rabbitTemplate = mock(RabbitTemplate.class);
+
     BookService bookService;
 
     @Before
     public void setUp() throws Exception {
 
-        this.bookService = new BookService(bookDao);
         setUpBookDaoMock();
+        bookService = new BookService(noteClient, bookDao, rabbitTemplate);
 
     }
 

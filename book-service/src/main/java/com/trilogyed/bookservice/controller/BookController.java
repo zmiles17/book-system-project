@@ -48,9 +48,9 @@ public class BookController {
         bookService.updateBook(bookViewModel);
     }
 
-    @GetMapping()
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<BookViewModel> getAllGames() {
+    public List<BookViewModel> getAllBooks() {
         return bookService.fetchAllBooks();
 
     }

@@ -35,31 +35,24 @@ public class BookDaoJdbcTemplateImpl implements BookDao {
     @Override
     @Transactional
     public Book addBook(Book book) {
-
         jdbcTemplate.update(
                 INSERT_BOOK,
                 book.getTitle(),
                 book.getAuthor()
         );
-
         int id = jdbcTemplate.queryForObject("select last_insert_id()", Integer.class);
         book.setBook_id(id);
-
         return book;
-
     }
 
     @Override
     public List<Book> getAllBooks() {
-
         List<Book> books =
                 jdbcTemplate.query(
                         SELECT_ALL_BOOKS,
                         this::mapRowToBook
                 );
-
         return books;
-
     }
 
     @Override
@@ -72,49 +65,33 @@ public class BookDaoJdbcTemplateImpl implements BookDao {
     }
 
     @Override
-    public Book updateBook(Book book) {
-
+    public void updateBook(Book book) {
         try {
-
             jdbcTemplate.update(UPDATE_BOOK,
                     book.getTitle(),
                     book.getAuthor(),
                     book.getBook_id()
             );
-            book = jdbcTemplate.queryForObject(SELECT_BOOK, this::mapRowToBook, book.getBook_id());
-            return book;
-
         } catch (EmptyResultDataAccessException ex) {
-            return null;
+            System.out.println("An error occurred while updatig a book:" + ex.getMessage());
         }
-
     }
 
     @Override
-    public Book deleteBook(int book_id) {
-
+    public void deleteBook(int book_id) {
         try {
-
-            Book book = jdbcTemplate.queryForObject(SELECT_BOOK, this::mapRowToBook, book_id);
             jdbcTemplate.update(DELETE_BOOK, book_id);
-
-            return book;
-
         } catch (EmptyResultDataAccessException ex) {
-            return null;
+            System.out.println("An error occurred while deleting a book:" + ex.getMessage());
         }
-
     }
 
     private Book mapRowToBook(ResultSet rs, int rowNum) throws SQLException {
-
         Book book = new Book();
         book.setBook_id(rs.getInt("book_id"));
         book.setTitle(rs.getString("title"));
         book.setAuthor(rs.getString("author"));
-
         return book;
-
     }
 
 }

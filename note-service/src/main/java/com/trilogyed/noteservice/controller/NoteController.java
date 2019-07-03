@@ -41,7 +41,7 @@ public class NoteController {
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateNote(@PathVariable("id") int id, @RequestBody @Valid Note note) {
         note.setNoteId(id);
         noteDao.updateNote(note);

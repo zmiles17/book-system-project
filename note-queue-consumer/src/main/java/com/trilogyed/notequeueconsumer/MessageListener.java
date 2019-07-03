@@ -8,25 +8,26 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MessageListener {
-    @Autowired
+
     private final NoteClient client;
 
-
+    @Autowired
     MessageListener(NoteClient client) {
         this.client = client;
     }
 
     @RabbitListener(queues = NoteQueueConsumerApplication.QUEUE_NAME)
     public void receiveMessage(Note note) {
-       if(note.getNoteId()==0){
-             client.addNote(note);
-           System.out.println(note.toString());
-       }
-       else
-       {
-            client.updateNote(note,note.getNoteId());
-           System.out.println(note.toString());
-       }
+        try {
+            if (note.getNoteId() == 0) {
+                Note fromClient = client.createNote(note);
+                System.out.println("Note created: " + fromClient.getNote());
+            } else {
+                client.updateNote(note, note.getNoteId());
+                System.out.println("Note updated: " + note.getNote());
+            }
+        } catch (Exception e) {
+            System.out.println("Exception occurred:" + e.getMessage());
+        }
     }
-
 }
