@@ -13,11 +13,11 @@ public interface NoteClient {
     public Note createNote(@RequestBody Note note);
 
     @RequestMapping(value = "/notes/{id}", method = RequestMethod.PUT)
-    public void updateNote( @RequestBody Note note,@PathVariable("id") int id);
+    public void updateNote(@RequestBody Note note, @PathVariable("id") int id);
 
     @RequestMapping(value = "/notes", method = RequestMethod.GET)
-    public void getAllNotes();
+    public List<Note> getAllNotes();
 
     @RequestMapping(value = "/notes/{id}", method = RequestMethod.GET)
-    public void getnote(@PathVariable("id") int id);
+    public Note getNote(@PathVariable("id") int id);
 }
