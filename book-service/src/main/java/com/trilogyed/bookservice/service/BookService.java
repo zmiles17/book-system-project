@@ -4,6 +4,8 @@ import com.trilogyed.bookservice.dao.BookDao;
 import com.trilogyed.bookservice.model.Book;
 import com.trilogyed.bookservice.model.BookViewModel;
 import com.trilogyed.bookservice.util.feign.NoteClient;
+import com.trilogyed.bookservice.util.notes.Note;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,15 +14,28 @@ import java.util.List;
 
 @Component
 public class BookService {
+    public static final String EXCHANGE = "note-exchange";
+    public static final String ROUTING_KEY = "note.#";
 
-//    private final NoteClient client
+    @Autowired
+    private NoteClient client;
 
     BookDao dao;
 
     @Autowired
-    public BookService(BookDao dao /*,NoteClient client*/) {
+    private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    public BookService(BookDao dao) {
         this.dao = dao;
-//        this.client = client;
+    }
+
+    public BookService(NoteClient client) {
+        this.client = client;
+    }
+
+    public BookService(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
     }
 
     public BookViewModel newBook(BookViewModel bookViewModel) {
@@ -30,6 +45,13 @@ public class BookService {
                 bookViewModel.getAuthor()
                 );
         book = dao.addBook(book);
+        //call note service through rabbitq to add a note
+        String notes ="New book added";
+        Note note = new Note(book.getBook_id(),notes);
+        System.out.println("Sending message...");
+        rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, note);
+        System.out.println("Message Sent");
+        ///////////////////////////
         bookViewModel.setBook_id(book.getBook_id());
         return bookViewModel;
     }

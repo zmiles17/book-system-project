@@ -8,6 +8,10 @@ public class Note {
 
     public Note() {
     }
+    public Note(int bookId, String note) {
+        this.bookId = bookId;
+        this.note = note;
+    }
 
     public Note(int noteId, int bookId, String note) {
         this.noteId = noteId;
