@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class BookService {
@@ -51,7 +52,11 @@ public class BookService {
         System.out.println("Sending message...");
         rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, note);
         System.out.println("Message Sent");
+        List<Note> noteList=new ArrayList<>();
+        noteList.add(note);
+        bookViewModel.setNotes(noteList);
         ///////////////////////////
+
         bookViewModel.setBook_id(book.getBook_id());
         return bookViewModel;
     }
@@ -86,6 +91,15 @@ public class BookService {
                 bookViewModel.getTitle(),
                 bookViewModel.getAuthor()
         );
+        int increment=0;
+        List<Note> noteList = client.getAllNotes();
+        noteList= noteList.stream().filter(note->note.getBookId()==bookViewModel.getBook_id()).collect(Collectors.toList());
+        for(Note note:noteList){
+            note.setNote("note upated.." + increment++);
+           // client.updateNote(note,note.getNoteId());
+            rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, note);
+        }
+        bookViewModel.setNotes(noteList);
         return buildBookViewModel(dao.updateBook(book));
     }
 
@@ -94,8 +108,12 @@ public class BookService {
         bvm.setBook_id(book.getBook_id());
         bvm.setTitle(book.getTitle());
         bvm.setAuthor(book.getAuthor());
-//        bvm.setNotes();
+        //get notes from note service
+        List<Note> noteList = client.getAllNotes();
+        noteList= noteList.stream().filter(note->note.getBookId()==book.getBook_id()).collect(Collectors.toList());
+        bvm.setNotes(noteList);
         return bvm;
     }
+
 
 }
