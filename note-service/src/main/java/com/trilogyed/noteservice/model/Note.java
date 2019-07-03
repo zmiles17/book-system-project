@@ -1,13 +1,14 @@
 package com.trilogyed.noteservice.model;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 public class Note {
 
-    @NotEmpty(message = "Note must possess a valid noteId.")
+    @Min(0)
     private int noteId;
-    @NotEmpty(message = "Note must possess a valid bookId")
+    @Min(0)
     private int bookId;
     private String note;
 

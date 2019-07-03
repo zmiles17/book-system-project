@@ -28,7 +28,7 @@ public class NoteController {
         return noteDao.getNote(id);
     }
 
-    @GetMapping("/book/book_id")
+    @GetMapping("/book/{book_id}")
     @ResponseStatus(HttpStatus.OK)
     public List<Note> getNotesByBook(@PathVariable("book_id") int id) {
         return noteDao.getNotesByBook(id);
