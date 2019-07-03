@@ -68,7 +68,7 @@ public class NoteDaoJdbcTemplateImpl implements NoteDao {
     }
 
     @Override
-    public List<Note> getNoteByBook(int id) {
+    public List<Note> getNotesByBook(int id) {
         Map<String, Object> params = new HashMap<>();
         params.put("bookId", id);
         try {
