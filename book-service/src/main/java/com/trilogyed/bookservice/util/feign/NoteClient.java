@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 @FeignClient(name = "note-service")
 public interface NoteClient {
     @RequestMapping(value = "/notes", method = RequestMethod.POST)
