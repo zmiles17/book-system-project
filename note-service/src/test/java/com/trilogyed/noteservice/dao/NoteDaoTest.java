@@ -48,9 +48,23 @@ public class NoteDaoTest {
         Note note = generateTestNote1();
         dao.addNote(note);
 
-        Note note2 = dao.getNoteByBook(42);
+        List<Note> noteList = dao.getNotesByBook(42);
 
-        assertEquals(note, note2);
+        assertEquals(note, noteList.get(0));
+    }
+
+    @Test
+    public void getMultipleNotesFromSameBook() {
+        Note note1 = generateTestNote3();
+        Note note2 = generateTestNote4();
+        Note note3 = generateTestNote1();
+        dao.addNote(note1);
+        dao.addNote(note2);
+        dao.addNote(note3);
+
+        List<Note> noteList = dao.getNotesByBook(20);
+
+        assertEquals(2, noteList.size());
     }
 
     @Test
@@ -102,4 +116,12 @@ public class NoteDaoTest {
         note.setNote("Now we have a List of notes.  Booyah.");
         return note;
     }
+
+    public Note generateTestNote4(){
+        Note note = new Note();
+        note.setBookId(20);
+        note.setNote("This note Matches same book as previous");
+        return note;
+    }
+
 }

@@ -10,11 +10,11 @@ public interface NoteDao {
 
     Note getNote(int id);
 
-    Note getNoteByBook(int id);
+    List<Note> getNotesByBook(int id);
 
     List<Note> getAllNotes();
 
     Note updateNote(Note note);
 
-    void deleteNote(int id);
+    Note deleteNote(int id);
 }

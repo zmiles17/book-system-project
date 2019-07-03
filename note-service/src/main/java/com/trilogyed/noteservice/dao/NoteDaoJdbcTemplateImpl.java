@@ -24,17 +24,17 @@ public class NoteDaoJdbcTemplateImpl implements NoteDao {
     private static final String SELECT_NOTE_SQL =
             "select * from note where note_id = :noteId";
 
-    private static final String SELECT_NOTE_BY_BOOK_SQL =
+    private static final String SELECT_NOTES_BY_BOOK_SQL =
             "select * from note where book_id = :bookId";
 
     private static final String SELECT_ALL_NOTES_SQL =
             "select * from note";
 
     private static final String UPDATE_NOTE_SQL =
-            "update note set book_id = :bookId, note = :note where note_id = :id";
+            "update note set book_id = :bookId, note = :note where note_id = :noteId";
 
     private static final String DELETE_NOTE_SQL =
-            "delete from note where note_id = :id";
+            "delete from note where note_id = :noteId";
 
     @Autowired
     public NoteDaoJdbcTemplateImpl(NamedParameterJdbcTemplate jdbcTemplate) {
@@ -68,11 +68,11 @@ public class NoteDaoJdbcTemplateImpl implements NoteDao {
     }
 
     @Override
-    public Note getNoteByBook(int id) {
+    public List<Note> getNotesByBook(int id) {
         Map<String, Object> params = new HashMap<>();
         params.put("bookId", id);
         try {
-            return jdbcTemplate.queryForObject(SELECT_NOTE_BY_BOOK_SQL, params, this::mapRowToNote);
+            return jdbcTemplate.query(SELECT_NOTES_BY_BOOK_SQL, params, this::mapRowToNote);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -88,17 +88,23 @@ public class NoteDaoJdbcTemplateImpl implements NoteDao {
         Map<String, Object> params = new HashMap<>();
         params.put("bookId", note.getBookId());
         params.put("note", note.getNote());
-        params.put("id", note.getNoteId());
+        params.put("noteId", note.getNoteId());
 
         jdbcTemplate.update(UPDATE_NOTE_SQL, params);
         return note;
     }
 
     @Override
-    public void deleteNote(int id) {
+    public Note deleteNote(int id) {
         Map<String, Object> params = new HashMap<>();
-        params.put("id", id);
-        jdbcTemplate.update(DELETE_NOTE_SQL, params);
+        params.put("noteId", id);
+        try {
+            Note note = jdbcTemplate.queryForObject(SELECT_NOTE_SQL, params, this::mapRowToNote);
+            jdbcTemplate.update(DELETE_NOTE_SQL, params);
+            return note;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     private Note mapRowToNote(ResultSet rs, int rowNum) throws SQLException {
