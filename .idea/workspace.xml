@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a03b26f5-ee1a-42ac-b1bc-c09be8a3d186" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_hateoas_2_1_6_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_hateoas_spring_hateoas_0_25_1_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_plugin_spring_plugin_core_1_2_0_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bookSystemConfigs/noteService.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/note-service/src/main/java/com/trilogyed/noteservice/NoteServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/note-service/src/main/java/com/trilogyed/noteservice/NoteServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/note-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/note-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/note-service/src/main/java/com/trilogyed/noteservice/controller/NoteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/note-service/src/main/java/com/trilogyed/noteservice/controller/NoteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/note-service/src/main/java/com/trilogyed/noteservice/model/Note.java" beforeDir="false" afterPath="$PROJECT_DIR$/note-service/src/main/java/com/trilogyed/noteservice/model/Note.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/note-service/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/note-service/src/main/resources/bootstrap.properties" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/book-service/target/" />
@@ -42,7 +39,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bookSystemConfigs/noteService.properties">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="114">
@@ -60,11 +57,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/note-service/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2166">
-              <caret line="57" column="20" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
+            <state relative-caret-position="261">
+              <caret line="49" column="21" lean-forward="true" selection-start-line="46" selection-start-column="8" selection-end-line="49" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -73,7 +70,7 @@
         <entry file="file://$PROJECT_DIR$/note-service/src/main/java/com/trilogyed/noteservice/model/Note.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="418">
-              <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
+              <caret line="12" column="24" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -150,9 +147,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1261" />
+    <option name="x" value="1789" />
     <option name="y" value="42" />
-    <option name="width" value="2579" />
+    <option name="width" value="2051" />
     <option name="height" value="2118" />
   </component>
   <component name="ProjectView">
@@ -170,47 +167,17 @@
             <path>
               <item name="book-system-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="book-system-project" type="462c0819:PsiDirectoryNode" />
-              <item name="book-service" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="book-system-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="book-system-project" type="462c0819:PsiDirectoryNode" />
-              <item name="book-system-config-server" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="book-system-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="book-system-project" type="462c0819:PsiDirectoryNode" />
-              <item name="book-system-config-server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="book-system-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="book-system-project" type="462c0819:PsiDirectoryNode" />
-              <item name="book-system-config-server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="book-system-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="book-system-project" type="462c0819:PsiDirectoryNode" />
-              <item name="book-system-config-server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="book-system-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="book-system-project" type="462c0819:PsiDirectoryNode" />
-              <item name="book-system-config-server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="booksystemconfigserver" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="book-system-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="book-system-project" type="462c0819:PsiDirectoryNode" />
               <item name="bookSystemConfigs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="book-system-project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="book-system-project" type="462c0819:PsiDirectoryNode" />
+              <item name="note-queue-consumer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="book-system-project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="book-system-project" type="462c0819:PsiDirectoryNode" />
+              <item name="note-service" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -499,31 +466,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bookSystemConfigs/note-service.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bookSystemConfigs/book-service.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="2" column="24" selection-end-line="3" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/note-service/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2166">
-          <caret line="57" column="20" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/note-service/src/main/java/com/trilogyed/noteservice/model/Note.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
-          <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
+          <caret line="12" column="24" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -569,6 +515,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
           <caret line="3" column="26" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bookSystemConfigs/note-service.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bookSystemConfigs/book-service.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="2" column="24" selection-end-line="3" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/note-service/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="49" column="21" lean-forward="true" selection-start-line="46" selection-start-column="8" selection-end-line="49" selection-end-column="21" />
         </state>
       </provider>
     </entry>
