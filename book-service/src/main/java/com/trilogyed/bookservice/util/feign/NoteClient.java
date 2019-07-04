@@ -11,15 +11,15 @@ import java.util.List;
 
 @FeignClient(name = "note-service", url = "http://localhost:1984")
 public interface NoteClient {
-    @RequestMapping(value = "/note", method = RequestMethod.POST)
+    @RequestMapping(value = "/notes", method = RequestMethod.POST)
     public Note createNote(@RequestBody Note note);
 
-    @RequestMapping(value = "/note/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/notes/{id}", method = RequestMethod.PUT)
     public void updateNote(@PathVariable("id") int id, @RequestBody Note note);
 
-    @RequestMapping(value = "/note", method = RequestMethod.GET)
+    @RequestMapping(value = "/notes", method = RequestMethod.GET)
     public List<Note> getAllNotes();
 
-    @RequestMapping(value = "/note/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/notes/{id}", method = RequestMethod.GET)
     public Note getNote(@PathVariable("id") int id);
 }

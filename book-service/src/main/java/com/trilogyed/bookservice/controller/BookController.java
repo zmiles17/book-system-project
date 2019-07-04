@@ -4,6 +4,7 @@ import com.trilogyed.bookservice.exception.NotFoundException;
 import com.trilogyed.bookservice.model.BookViewModel;
 import com.trilogyed.bookservice.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RefreshScope
 @RequestMapping("/books")
 public class BookController {
     @Autowired
@@ -37,7 +39,7 @@ public class BookController {
         bookService.deleteBook(bookId);
     }
 
-    @PutMapping("/{bookId}")//Another way to set the Rest API Put mapping
+    @PutMapping("/{bookId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateCustomer(@PathVariable("bookId") int bookId, @RequestBody @Valid BookViewModel bookViewModel) {
         if (bookViewModel.getBook_id() == 0)

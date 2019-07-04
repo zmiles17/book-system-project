@@ -78,17 +78,10 @@ public class BookService {
                 bookViewModel.getTitle(),
                 bookViewModel.getAuthor()
         );
-        //I'm not understanding this part - Zack
-        int increment=0;
-        List<Note> noteList = client.getAllNotes();
-        noteList= noteList.stream().filter(note->note.getBookId()==bookViewModel.getBook_id()).collect(Collectors.toList());
-        for(Note note:noteList){
-            note.setNote("note updated.." + increment++);
+        bookViewModel.getNotes().forEach(note -> {
             client.updateNote(note.getNoteId(), note);
             rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, note);
-        }
-        // ------------------------------------------------------------------
-        bookViewModel.setNotes(noteList);
+        });
         dao.updateBook(book);
     }
 
@@ -98,8 +91,10 @@ public class BookService {
         bvm.setTitle(book.getTitle());
         bvm.setAuthor(book.getAuthor());
         List<Note> noteList = client.getAllNotes();
-        noteList= noteList.stream().filter(note->note.getBookId()==book.getBook_id()).collect(Collectors.toList());
-        bvm.setNotes(noteList);
+        if(noteList.size() != 0) {
+            noteList = noteList.stream().filter(note -> note.getBookId() == book.getBook_id()).collect(Collectors.toList());
+            bvm.setNotes(noteList);
+        }
         return bvm;
     }
 
