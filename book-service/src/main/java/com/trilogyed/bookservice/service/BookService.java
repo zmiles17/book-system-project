@@ -35,29 +35,26 @@ public class BookService {
         Book book = new Book();
         book.setTitle(bookViewModel.getTitle());
         book.setAuthor(bookViewModel.getAuthor());
-        book = dao.addBook(book);
-        bookViewModel.setBook_id(book.getBook_id());
+        final Book bookReceived = dao.addBook(book);
+        bookViewModel.setBook_id(bookReceived.getBook_id());
 
         Note note = new Note();
         List<Note> notes = bookViewModel.getNotes();
             notes.forEach(e -> {
                 note.setBookId(bookViewModel.getBook_id());
                 note.setNote(e.getNote());
-                System.out.println("Sending message...");
+                System.out.println("Sending note...");
                 rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, note);
-                System.out.println("Message Sent");
+                System.out.println("Note Sent");
             });
 
             try {
                 Thread.sleep(1000);
-                List<Note> notesFromService = client.getAllNotes();
-                List<Note> toRemove = new ArrayList<>();
-                for(int i = 0; i < notesFromService.size(); i++) {
-                    if (notesFromService.get(i).getBookId() != book.getBook_id()) {
-                        toRemove.add(notesFromService.get(i));
-                    }
-                }
-                notesFromService.removeAll(toRemove);
+                List<Note> notesFromService =
+                        client.getAllNotes()
+                            .stream()
+                            .filter(n -> n.getBookId() == bookReceived.getBook_id())
+                            .collect(Collectors.toList());
                 bookViewModel.setNotes(notesFromService);
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
@@ -107,7 +104,10 @@ public class BookService {
         bvm.setAuthor(book.getAuthor());
         List<Note> noteList = client.getAllNotes();
         if(noteList.size() != 0) {
-            noteList = noteList.stream().filter(note -> note.getBookId() == book.getBook_id()).collect(Collectors.toList());
+            noteList = noteList
+                    .stream()
+                    .filter(note -> note.getBookId() == book.getBook_id())
+                    .collect(Collectors.toList());
             bvm.setNotes(noteList);
         }
         return bvm;
