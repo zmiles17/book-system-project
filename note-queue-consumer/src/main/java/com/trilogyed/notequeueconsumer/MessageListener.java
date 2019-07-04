@@ -22,7 +22,7 @@ public class MessageListener {
             if (note.getNoteId() == 0) {
                 Note fromClient = client.createNote(note);
                 System.out.println("Note created: " + fromClient.getNote());
-            } else {
+            } else if (note.getBookId() > 0) {
                 client.updateNote(note.getNoteId(), note);
                 System.out.println("Note updated: " + note.getNote());
             }
