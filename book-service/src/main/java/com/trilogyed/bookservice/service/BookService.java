@@ -38,15 +38,30 @@ public class BookService {
         book = dao.addBook(book);
         bookViewModel.setBook_id(book.getBook_id());
 
-        String notes ="New book added";
-        Note note = new Note(book.getBook_id(),notes);
-        System.out.println("Sending message...");
-        rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, note);
-        System.out.println("Message Sent");
-        List<Note> noteList=new ArrayList<>();
-        noteList.add(note);
-        bookViewModel.setNotes(noteList);
+        Note note = new Note();
+        List<Note> notes = bookViewModel.getNotes();
+            notes.forEach(e -> {
+                note.setBookId(bookViewModel.getBook_id());
+                note.setNote(e.getNote());
+                System.out.println("Sending message...");
+                rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, note);
+                System.out.println("Message Sent");
+            });
 
+            try {
+                Thread.sleep(1000);
+                List<Note> notesFromService = client.getAllNotes();
+                List<Note> toRemove = new ArrayList<>();
+                for(int i = 0; i < notesFromService.size(); i++) {
+                    if (notesFromService.get(i).getBookId() != book.getBook_id()) {
+                        toRemove.add(notesFromService.get(i));
+                    }
+                }
+                notesFromService.removeAll(toRemove);
+                bookViewModel.setNotes(notesFromService);
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
         return bookViewModel;
     }
 
@@ -97,6 +112,4 @@ public class BookService {
         }
         return bvm;
     }
-
-
 }

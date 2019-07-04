@@ -84,26 +84,24 @@ public class NoteDaoJdbcTemplateImpl implements NoteDao {
     }
 
     @Override
-    public Note updateNote(Note note) {
+    public void updateNote(Note note) {
         Map<String, Object> params = new HashMap<>();
         params.put("bookId", note.getBookId());
         params.put("note", note.getNote());
         params.put("noteId", note.getNoteId());
 
         jdbcTemplate.update(UPDATE_NOTE_SQL, params);
-        return note;
     }
 
     @Override
-    public Note deleteNote(int id) {
+    public void deleteNote(int id) {
         Map<String, Object> params = new HashMap<>();
         params.put("noteId", id);
         try {
             Note note = jdbcTemplate.queryForObject(SELECT_NOTE_SQL, params, this::mapRowToNote);
             jdbcTemplate.update(DELETE_NOTE_SQL, params);
-            return note;
         } catch (EmptyResultDataAccessException e) {
-            return null;
+            System.out.println("Exception occurred while deleting a note: " + e.getMessage());
         }
     }
 
