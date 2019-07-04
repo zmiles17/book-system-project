@@ -23,10 +23,11 @@ public class MessageListener {
                 Note fromClient = client.createNote(note);
                 System.out.println("Note created: " + fromClient.getNote());
             } else {
-                client.updateNote(note, note.getNoteId());
+                client.updateNote(note.getNoteId(), note);
                 System.out.println("Note updated: " + note.getNote());
             }
         } catch (Exception e) {
+            System.out.println(note.getNote() + " " + note.getBookId());
             System.out.println("Exception occurred:" + e.getMessage());
         }
     }

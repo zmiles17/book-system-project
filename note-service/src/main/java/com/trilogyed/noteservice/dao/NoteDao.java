@@ -14,7 +14,7 @@ public interface NoteDao {
 
     List<Note> getAllNotes();
 
-    Note updateNote(Note note);
+    void updateNote(Note note);
 
-    Note deleteNote(int id);
+    void deleteNote(int id);
 }

@@ -73,7 +73,7 @@ public class BookDaoJdbcTemplateImpl implements BookDao {
                     book.getBook_id()
             );
         } catch (EmptyResultDataAccessException ex) {
-            System.out.println("An error occurred while updatig a book:" + ex.getMessage());
+            System.out.println("An error occurred while updating a book:" + ex.getMessage());
         }
     }
 
