@@ -91,6 +91,7 @@ public class BookService {
                 bookViewModel.getAuthor()
         );
         bookViewModel.getNotes().forEach(note -> {
+            note.setBookId(book.getBook_id());
             client.updateNote(note.getNoteId(), note);
             rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, note);
         });
