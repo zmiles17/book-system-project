@@ -36,12 +36,12 @@ public class BookService {
         book.setTitle(bookViewModel.getTitle());
         book.setAuthor(bookViewModel.getAuthor());
         final Book bookReceived = dao.addBook(book);
-        bookViewModel.setBook_id(bookReceived.getBook_id());
+        bookViewModel.setBookId(bookReceived.getBookId());
 
         Note note = new Note();
         List<Note> notes = bookViewModel.getNotes();
             notes.forEach(e -> {
-                note.setBookId(bookViewModel.getBook_id());
+                note.setBookId(bookViewModel.getBookId());
                 note.setNote(e.getNote());
                 System.out.println("Sending note...");
                 rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, note);
@@ -53,7 +53,7 @@ public class BookService {
                 List<Note> notesFromService =
                         client.getAllNotes()
                             .stream()
-                            .filter(n -> n.getBookId() == bookReceived.getBook_id())
+                            .filter(n -> n.getBookId() == bookReceived.getBookId())
                             .collect(Collectors.toList());
                 bookViewModel.setNotes(notesFromService);
             } catch (InterruptedException e) {
@@ -86,12 +86,12 @@ public class BookService {
 
     public void updateBook(BookViewModel bookViewModel) {
         Book book = new Book(
-                bookViewModel.getBook_id(),
+                bookViewModel.getBookId(),
                 bookViewModel.getTitle(),
                 bookViewModel.getAuthor()
         );
         bookViewModel.getNotes().forEach(note -> {
-            note.setBookId(book.getBook_id());
+            note.setBookId(book.getBookId());
             client.updateNote(note.getNoteId(), note);
             rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, note);
         });
@@ -100,14 +100,14 @@ public class BookService {
 
     private BookViewModel buildBookViewModel(Book book) {
         BookViewModel bvm = new BookViewModel();
-        bvm.setBook_id(book.getBook_id());
+        bvm.setBookId(book.getBookId());
         bvm.setTitle(book.getTitle());
         bvm.setAuthor(book.getAuthor());
         List<Note> noteList = client.getAllNotes();
         if(noteList.size() != 0) {
             noteList = noteList
                     .stream()
-                    .filter(note -> note.getBookId() == book.getBook_id())
+                    .filter(note -> note.getBookId() == book.getBookId())
                     .collect(Collectors.toList());
             bvm.setNotes(noteList);
         }

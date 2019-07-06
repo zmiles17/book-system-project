@@ -10,10 +10,10 @@ public interface BookDao {
 
     public List<Book> getAllBooks();
 
-    public Book getBook(int book_id);
+    public Book getBook(int bookId);
 
     public void updateBook(Book book);
 
-    public void deleteBook(int book_id);
+    public void deleteBook(int bookId);
 
 }

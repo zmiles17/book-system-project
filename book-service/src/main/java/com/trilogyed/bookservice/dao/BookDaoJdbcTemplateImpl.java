@@ -17,13 +17,13 @@ public class BookDaoJdbcTemplateImpl implements BookDao {
     private static final String INSERT_BOOK =
             "insert into book (title, author) values (?, ?)";
     private static final String SELECT_BOOK =
-            "select * from book where book_id = ?";
+            "select * from book where bookId = ?";
     private static final String SELECT_ALL_BOOKS =
             "select * from book";
     private static final String UPDATE_BOOK =
-            "update book set title = ?, author = ? where book_id = ?";
+            "update book set title = ?, author = ? where bookId = ?";
     private static final String DELETE_BOOK =
-            "delete from book where book_id = ?";
+            "delete from book where bookId = ?";
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -41,7 +41,7 @@ public class BookDaoJdbcTemplateImpl implements BookDao {
                 book.getAuthor()
         );
         int id = jdbcTemplate.queryForObject("select last_insert_id()", Integer.class);
-        book.setBook_id(id);
+        book.setBookId(id);
         return book;
     }
 
@@ -56,9 +56,9 @@ public class BookDaoJdbcTemplateImpl implements BookDao {
     }
 
     @Override
-    public Book getBook(int book_id) {
+    public Book getBook(int bookId) {
         try {
-            return jdbcTemplate.queryForObject(SELECT_BOOK, this::mapRowToBook, book_id);
+            return jdbcTemplate.queryForObject(SELECT_BOOK, this::mapRowToBook, bookId);
         } catch (EmptyResultDataAccessException ex) {
             return null;
         }
@@ -70,7 +70,7 @@ public class BookDaoJdbcTemplateImpl implements BookDao {
             jdbcTemplate.update(UPDATE_BOOK,
                     book.getTitle(),
                     book.getAuthor(),
-                    book.getBook_id()
+                    book.getBookId()
             );
         } catch (EmptyResultDataAccessException ex) {
             System.out.println("An error occurred while updating a book:" + ex.getMessage());
@@ -78,9 +78,9 @@ public class BookDaoJdbcTemplateImpl implements BookDao {
     }
 
     @Override
-    public void deleteBook(int book_id) {
+    public void deleteBook(int bookId) {
         try {
-            jdbcTemplate.update(DELETE_BOOK, book_id);
+            jdbcTemplate.update(DELETE_BOOK, bookId);
         } catch (EmptyResultDataAccessException ex) {
             System.out.println("An error occurred while deleting a book:" + ex.getMessage());
         }
@@ -88,7 +88,7 @@ public class BookDaoJdbcTemplateImpl implements BookDao {
 
     private Book mapRowToBook(ResultSet rs, int rowNum) throws SQLException {
         Book book = new Book();
-        book.setBook_id(rs.getInt("book_id"));
+        book.setBookId(rs.getInt("bookId"));
         book.setTitle(rs.getString("title"));
         book.setAuthor(rs.getString("author"));
         return book;

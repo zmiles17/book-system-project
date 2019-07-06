@@ -42,9 +42,9 @@ public class BookController {
     @PutMapping("/{bookId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateCustomer(@PathVariable("bookId") int bookId, @RequestBody @Valid BookViewModel bookViewModel) {
-        if (bookViewModel.getBook_id() == 0)
-            bookViewModel.setBook_id(bookId);
-        if (bookId != bookViewModel.getBook_id()) {
+        if (bookViewModel.getBookId() == 0)
+            bookViewModel.setBookId(bookId);
+        if (bookId != bookViewModel.getBookId()) {
             throw new IllegalArgumentException("Book ID on path must match the ID in the Book object");
         }
         bookService.updateBook(bookViewModel);
