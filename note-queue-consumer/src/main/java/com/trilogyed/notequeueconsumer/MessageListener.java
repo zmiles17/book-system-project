@@ -17,7 +17,7 @@ public class MessageListener {
     }
 
     @RabbitListener(queues = NoteQueueConsumerApplication.QUEUE_NAME)
-    public void receiveMessage(Note note) {
+    public void receiveNote(Note note) {
         try {
             if (note.getNoteId() == 0) {
                 Note fromClient = client.createNote(note);
