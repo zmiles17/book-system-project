@@ -22,4 +22,7 @@ public interface NoteClient {
 
     @RequestMapping(value = "/notes/{id}", method = RequestMethod.GET)
     public Note getNote(@PathVariable("id") int id);
+
+    @RequestMapping(value = "/notes/book/{book_id}", method = RequestMethod.GET)
+    public List<Note> getNotesByBook(@PathVariable("book_id") int bookId);
 }
