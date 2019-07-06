@@ -2,27 +2,24 @@ package com.trilogyed.bookservice.util.feign;
 
 import com.trilogyed.bookservice.util.notes.Note;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "note-service", url = "http://localhost:1984")
+@FeignClient(name = "note-service", path = "/notes")
 public interface NoteClient {
-    @RequestMapping(value = "/notes", method = RequestMethod.POST)
+    @PostMapping
     public Note createNote(@RequestBody Note note);
 
-    @RequestMapping(value = "/notes/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "{id}")
     public void updateNote(@PathVariable("id") int id, @RequestBody Note note);
 
-    @RequestMapping(value = "/notes", method = RequestMethod.GET)
+    @GetMapping
     public List<Note> getAllNotes();
 
-    @RequestMapping(value = "/notes/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "{id}")
     public Note getNote(@PathVariable("id") int id);
 
-    @RequestMapping(value = "/notes/book/{book_id}", method = RequestMethod.GET)
+    @GetMapping(value = "book/{book_id}")
     public List<Note> getNotesByBook(@PathVariable("book_id") int bookId);
 }
