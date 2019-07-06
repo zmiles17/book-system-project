@@ -17,13 +17,13 @@ public class BookDaoJdbcTemplateImpl implements BookDao {
     private static final String INSERT_BOOK =
             "insert into book (title, author) values (?, ?)";
     private static final String SELECT_BOOK =
-            "select * from book where bookId = ?";
+            "select * from book where book_id = ?";
     private static final String SELECT_ALL_BOOKS =
             "select * from book";
     private static final String UPDATE_BOOK =
-            "update book set title = ?, author = ? where bookId = ?";
+            "update book set title = ?, author = ? where book_id = ?";
     private static final String DELETE_BOOK =
-            "delete from book where bookId = ?";
+            "delete from book where book_id = ?";
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -88,7 +88,7 @@ public class BookDaoJdbcTemplateImpl implements BookDao {
 
     private Book mapRowToBook(ResultSet rs, int rowNum) throws SQLException {
         Book book = new Book();
-        book.setBookId(rs.getInt("bookId"));
+        book.setBookId(rs.getInt("book_id"));
         book.setTitle(rs.getString("title"));
         book.setAuthor(rs.getString("author"));
         return book;
