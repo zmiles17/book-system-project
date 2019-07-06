@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class BookService {
@@ -51,12 +50,8 @@ public class BookService {
         }
 
             try {
-                Thread.sleep(1000);
-                List<Note> notesFromService =
-                        client.getAllNotes()
-                            .stream()
-                            .filter(n -> n.getBookId() == bookReceived.getBookId())
-                            .collect(Collectors.toList());
+                Thread.sleep(1250);
+                List<Note> notesFromService = client.getNotesByBook(bookReceived.getBookId());
                 bookViewModel.setNotes(notesFromService);
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
@@ -105,12 +100,8 @@ public class BookService {
         bvm.setBookId(book.getBookId());
         bvm.setTitle(book.getTitle());
         bvm.setAuthor(book.getAuthor());
-        List<Note> noteList = client.getAllNotes();
+        List<Note> noteList = client.getNotesByBook(book.getBookId());
         if(noteList.size() != 0) {
-            noteList = noteList
-                    .stream()
-                    .filter(note -> note.getBookId() == book.getBookId())
-                    .collect(Collectors.toList());
             bvm.setNotes(noteList);
         }
         return bvm;
