@@ -60,7 +60,7 @@ public class BookServiceTests {
         BookViewModel book = new BookViewModel();
 
         book = bookService.newBook(book);
-        BookViewModel fromService = bookService.fetchBook(book.getBook_id());
+        BookViewModel fromService = bookService.fetchBook(book.getBookId());
         assertEquals(book, fromService);
 
     }

@@ -24,7 +24,7 @@ public class BookDaoTests {
 
         List<Book> books = dao.getAllBooks();
 
-        books.stream().forEach(book -> dao.deleteBook(book.getBook_id()));
+        books.stream().forEach(book -> dao.deleteBook(book.getBookId()));
 
     }
 
@@ -35,13 +35,13 @@ public class BookDaoTests {
 
         book = dao.addBook(book);
 
-        Book fromDao = dao.getBook(book.getBook_id());
+        Book fromDao = dao.getBook(book.getBookId());
 
         assertEquals(fromDao, book);
 
-        dao.deleteBook(book.getBook_id());
+        dao.deleteBook(book.getBookId());
 
-        fromDao = dao.getBook(book.getBook_id());
+        fromDao = dao.getBook(book.getBookId());
 
         assertNull(fromDao);
 
@@ -72,7 +72,7 @@ public class BookDaoTests {
         book.setAuthor("Different Author");
 
         dao.updateBook(book);
-        Book fromDao = dao.getBook(book.getBook_id());
+        Book fromDao = dao.getBook(book.getBookId());
 
         assertEquals(book, fromDao);
 
