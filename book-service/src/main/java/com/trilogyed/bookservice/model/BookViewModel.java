@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 public class BookViewModel {
-    private int book_id;
+    private int bookId;
     @Size(max = 50)
     @NotEmpty(message = "Please provide the title of the book.")
     private String title;
@@ -16,12 +16,12 @@ public class BookViewModel {
     private String author;
     private List<Note> notes;
 
-    public int getBook_id() {
-        return book_id;
+    public int getBookId() {
+        return bookId;
     }
 
-    public void setBook_id(int book_id) {
-        this.book_id = book_id;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
     public String getTitle() {
