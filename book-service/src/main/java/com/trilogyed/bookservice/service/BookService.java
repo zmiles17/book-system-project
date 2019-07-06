@@ -40,6 +40,7 @@ public class BookService {
 
         Note note = new Note();
         List<Note> notes = bookViewModel.getNotes();
+        if (notes != null) {
             notes.forEach(e -> {
                 note.setBookId(bookViewModel.getBookId());
                 note.setNote(e.getNote());
@@ -47,6 +48,7 @@ public class BookService {
                 rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, note);
                 System.out.println("Note Sent");
             });
+        }
 
             try {
                 Thread.sleep(1000);
