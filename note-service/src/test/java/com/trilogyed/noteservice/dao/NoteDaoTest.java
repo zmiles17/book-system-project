@@ -89,7 +89,7 @@ public class NoteDaoTest {
         note.setBookId(999);
         note.setNote("NEW AND UPDATED TEST NOTE");
 
-        dao.updateNote(note);
+        dao.updateNote(note.getNoteId(), note);
 
         Note note2 = dao.getNote(note.getNoteId());
 

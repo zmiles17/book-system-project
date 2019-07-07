@@ -84,11 +84,11 @@ public class NoteDaoJdbcTemplateImpl implements NoteDao {
     }
 
     @Override
-    public void updateNote(Note note) {
+    public void updateNote(int noteId, Note note) {
         Map<String, Object> params = new HashMap<>();
         params.put("bookId", note.getBookId());
         params.put("note", note.getNote());
-        params.put("noteId", note.getNoteId());
+        params.put("noteId", noteId);
 
         jdbcTemplate.update(UPDATE_NOTE_SQL, params);
     }

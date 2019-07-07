@@ -2,6 +2,7 @@ package com.trilogyed.noteservice.controller;
 
 import com.trilogyed.noteservice.dao.NoteDao;
 import com.trilogyed.noteservice.model.Note;
+import com.trilogyed.noteservice.service.NoteServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,9 @@ public class NoteController {
 
     @Autowired
     NoteDao noteDao;
+
+    @Autowired
+    NoteServiceLayer service;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -42,8 +46,9 @@ public class NoteController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateNote(@PathVariable("id") int id, @RequestBody @Valid Note note) {
-        noteDao.updateNote(note);
+    public void updateNote(@PathVariable("id") int noteId,
+                           @RequestBody @Valid Note note) {
+        service.updateNote(noteId, note);
     }
 
     @DeleteMapping("/{id}")
