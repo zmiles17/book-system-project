@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @FeignClient(name = "note-service")
 public interface NoteClient {
     @RequestMapping(value = "/notes", method = RequestMethod.POST)
-    public Note createNote(@RequestBody Note note);
+    Note createNote(@RequestBody Note note);
 
     @RequestMapping(value = "/notes/{id}", method = RequestMethod.PUT)
-    public void updateNote(@PathVariable("id") int id, @RequestBody Note note);
+    void updateNote(@PathVariable("id") int noteId, @RequestBody Note note);
 }

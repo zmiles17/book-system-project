@@ -9,17 +9,17 @@ import java.util.List;
 @FeignClient(name = "note-service", path = "/notes")
 public interface NoteClient {
     @PostMapping
-    public Note createNote(@RequestBody Note note);
+    Note createNote(@RequestBody Note note);
 
-    @PutMapping(value = "{id}")
-    public void updateNote(@PathVariable("id") int id, @RequestBody Note note);
+    @PutMapping("{id}")
+    void updateNote(@PathVariable("id") int noteId, @RequestBody Note note);
 
     @GetMapping
-    public List<Note> getAllNotes();
+    List<Note> getAllNotes();
 
-    @GetMapping(value = "{id}")
-    public Note getNote(@PathVariable("id") int id);
+    @GetMapping("{id}")
+    Note getNote(@PathVariable("id") int id);
 
-    @GetMapping(value = "book/{book_id}")
-    public List<Note> getNotesByBook(@PathVariable("book_id") int bookId);
+    @GetMapping("book/{book_id}")
+    List<Note> getNotesByBook(@PathVariable("book_id") int bookId);
 }

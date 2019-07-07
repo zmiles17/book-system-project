@@ -37,12 +37,9 @@ public class BookService {
         final Book bookReceived = dao.addBook(book);
         bookViewModel.setBookId(bookReceived.getBookId());
 
-        Note note = new Note();
-        List<Note> notes = bookViewModel.getNotes();
-        if (notes != null) {
-            notes.forEach(e -> {
-                note.setBookId(bookViewModel.getBookId());
-                note.setNote(e.getNote());
+        if (bookViewModel.getNotes() != null) {
+            bookViewModel.getNotes().forEach(note -> {
+                note.setBookId(bookReceived.getBookId());
                 System.out.println("Sending note...");
                 rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, note);
                 System.out.println("Note Sent");
@@ -51,8 +48,7 @@ public class BookService {
 
             try {
                 Thread.sleep(1250);
-                List<Note> notesFromService = client.getNotesByBook(bookReceived.getBookId());
-                bookViewModel.setNotes(notesFromService);
+                bookViewModel.setNotes(client.getNotesByBook(bookReceived.getBookId()));
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
@@ -82,16 +78,18 @@ public class BookService {
     }
 
     public void updateBook(BookViewModel bookViewModel) {
+        System.out.println(bookViewModel.getBookId());
         Book book = new Book(
                 bookViewModel.getBookId(),
                 bookViewModel.getTitle(),
                 bookViewModel.getAuthor()
         );
-        bookViewModel.getNotes().forEach(note -> {
-            note.setBookId(book.getBookId());
-            client.updateNote(note.getNoteId(), note);
-            rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, note);
-        });
+        if(bookViewModel.getNotes() != null) {
+            bookViewModel.getNotes().forEach(note -> {
+                note.setBookId(book.getBookId());
+                rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, note);
+            });
+        }
         dao.updateBook(book);
     }
 
