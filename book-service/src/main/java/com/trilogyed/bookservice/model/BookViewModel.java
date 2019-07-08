@@ -2,6 +2,7 @@ package com.trilogyed.bookservice.model;
 
 import com.trilogyed.bookservice.util.notes.Note;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -14,6 +15,7 @@ public class BookViewModel {
     @Size(max = 50)
     @NotEmpty(message = "Please provide the author name.")
     private String author;
+    @Valid
     private List<Note> notes;
 
     public int getBookId() {

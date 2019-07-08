@@ -1,9 +1,12 @@
 package com.trilogyed.bookservice.util.notes;
 
+import javax.validation.constraints.Size;
+
 public class Note {
 
     private int noteId;
     private int bookId;
+    @Size(max = 255, message = "Note must be less than 255 characters")
     private String note;
 
     public Note() {
