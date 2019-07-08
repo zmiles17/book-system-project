@@ -106,18 +106,6 @@ public class BookServiceTests {
     @Test
     public void fetchAllBook() {
 
-        BookViewModel bookViewModel1 = new BookViewModel();
-        bookViewModel1.setBookId(2);
-        bookViewModel1.setTitle("Title");
-        bookViewModel1.setAuthor("Author");
-        bookViewModel1 = bookService.newBook(bookViewModel1);
-
-        BookViewModel bookViewModel2 = new BookViewModel();
-        bookViewModel2.setBookId(4);
-        bookViewModel2.setTitle("Title");
-        bookViewModel2.setAuthor("Author");
-        bookViewModel2 = bookService.newBook(bookViewModel2);
-
         List<BookViewModel> bookList = bookService.fetchAllBooks();
         System.out.println(bookList);
 
