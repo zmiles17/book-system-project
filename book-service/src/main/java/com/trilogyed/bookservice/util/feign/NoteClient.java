@@ -6,13 +6,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "note-service", path = "/notes")
+@FeignClient(name = "note-service")
 public interface NoteClient {
-    @PostMapping
-    Note createNote(@RequestBody Note note);
-
-    @PutMapping("{id}")
-    void updateNote(@PathVariable("id") int noteId, @RequestBody Note note);
 
     @GetMapping
     List<Note> getAllNotes();
