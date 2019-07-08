@@ -1,11 +1,15 @@
 package com.trilogyed.noteservice.model;
 
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 import java.util.Objects;
 
 public class Note {
 
     private int noteId;
+    @Min(value = 1, message = "Must have a valid book Id")
     private int bookId;
+    @Size(max = 255, message = "Note must be less than 255 characters")
     private String note;
 
     public Note() {
