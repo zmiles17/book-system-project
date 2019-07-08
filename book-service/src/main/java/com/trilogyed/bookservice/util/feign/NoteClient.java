@@ -9,12 +9,6 @@ import java.util.List;
 @FeignClient(name = "note-service")
 public interface NoteClient {
 
-    @GetMapping
-    List<Note> getAllNotes();
-
-    @GetMapping("{id}")
-    Note getNote(@PathVariable("id") int id);
-
     @GetMapping("book/{book_id}")
     List<Note> getNotesByBook(@PathVariable("book_id") int bookId);
 
