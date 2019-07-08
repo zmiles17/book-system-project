@@ -41,7 +41,8 @@ public class BookController {
 
     @PutMapping("/{bookId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateCustomer(@PathVariable("bookId") int bookId, @RequestBody @Valid BookViewModel bookViewModel) {
+    public void updateBook(@PathVariable("bookId") int bookId,
+                           @RequestBody @Valid BookViewModel bookViewModel) {
         if (bookViewModel.getBookId() == 0)
             bookViewModel.setBookId(bookId);
         if (bookId != bookViewModel.getBookId()) {

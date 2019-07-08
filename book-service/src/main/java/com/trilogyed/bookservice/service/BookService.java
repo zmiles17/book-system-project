@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class BookService {
@@ -38,24 +37,18 @@ public class BookService {
         final Book bookReceived = dao.addBook(book);
         bookViewModel.setBookId(bookReceived.getBookId());
 
-        Note note = new Note();
-        List<Note> notes = bookViewModel.getNotes();
-            notes.forEach(e -> {
-                note.setBookId(bookViewModel.getBookId());
-                note.setNote(e.getNote());
+        if (bookViewModel.getNotes() != null) {
+            bookViewModel.getNotes().forEach(note -> {
+                note.setBookId(bookReceived.getBookId());
                 System.out.println("Sending note...");
                 rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, note);
                 System.out.println("Note Sent");
             });
+        }
 
             try {
-                Thread.sleep(1000);
-                List<Note> notesFromService =
-                        client.getAllNotes()
-                            .stream()
-                            .filter(n -> n.getBookId() == bookReceived.getBookId())
-                            .collect(Collectors.toList());
-                bookViewModel.setNotes(notesFromService);
+                Thread.sleep(1250);
+                bookViewModel.setNotes(client.getNotesByBook(bookReceived.getBookId()));
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
@@ -85,16 +78,18 @@ public class BookService {
     }
 
     public void updateBook(BookViewModel bookViewModel) {
+        System.out.println(bookViewModel.getBookId());
         Book book = new Book(
                 bookViewModel.getBookId(),
                 bookViewModel.getTitle(),
                 bookViewModel.getAuthor()
         );
-        bookViewModel.getNotes().forEach(note -> {
-            note.setBookId(book.getBookId());
-            client.updateNote(note.getNoteId(), note);
-            rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, note);
-        });
+        if(bookViewModel.getNotes() != null) {
+            bookViewModel.getNotes().forEach(note -> {
+                note.setBookId(book.getBookId());
+                rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, note);
+            });
+        }
         dao.updateBook(book);
     }
 
@@ -103,12 +98,8 @@ public class BookService {
         bvm.setBookId(book.getBookId());
         bvm.setTitle(book.getTitle());
         bvm.setAuthor(book.getAuthor());
-        List<Note> noteList = client.getAllNotes();
+        List<Note> noteList = client.getNotesByBook(book.getBookId());
         if(noteList.size() != 0) {
-            noteList = noteList
-                    .stream()
-                    .filter(note -> note.getBookId() == book.getBookId())
-                    .collect(Collectors.toList());
             bvm.setNotes(noteList);
         }
         return bvm;
