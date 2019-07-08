@@ -22,4 +22,7 @@ public interface NoteClient {
 
     @GetMapping("book/{book_id}")
     List<Note> getNotesByBook(@PathVariable("book_id") int bookId);
+
+    @DeleteMapping("{id}")
+    void deleteNote(@PathVariable("id") int id);
 }
