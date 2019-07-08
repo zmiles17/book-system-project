@@ -1,0 +1,263 @@
+openapi: 3.0.0
+info:
+  title: Book System Project
+  description: >-
+    The Book Service is a typical  REST web service, will use the Note Queue to update the Note Service; it will directly contact the Note Service (using a Feign client) when retrieving Notes.
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:1984'
+    description: localhost
+tags:
+  - name: 'Books'
+    description: 'Book Operations'
+  - name: 'Notes'
+    description: 'Notes Operations'
+
+paths:
+  /books:
+    post:
+      tags:
+        - 'Books'
+      summary: 'Adds a book'
+      description: ''
+      operationId: 'addBook'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        405:
+          description: "Invalid input"
+
+    get:
+      tags:
+        - 'Books'
+      summary: 'Get All Books'
+      description: 'Finds all books'
+      operationId: 'getAllbooks'
+
+
+      responses:
+        400:
+          description: "Invalid query parameter value"
+        404:
+          description: "Book(s) not found"
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+
+  /books/{bookId}:
+    get:
+      tags:
+        - 'Books'
+      summary: 'Find Books by bookId'
+      description: ''
+      operationId: 'findBookById'
+      parameters:
+        - name: 'bookId'
+          in: 'path'
+          required: true
+          description: 'bookId of book object to find'
+          schema:
+            type: 'integer'
+            format: 'int64'
+      responses:
+        200:
+          description: "Successful operation"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Book not found"
+
+    put:
+      tags:
+        - 'Books'
+      summary: ''
+      description: ''
+      operationId: 'updateBook'
+      parameters:
+        - name: 'bookId'
+          in: 'path'
+          description: 'Id of game to update'
+          required: true
+          schema:
+            type: 'integer'
+      requestBody:
+        description: 'Book object to update'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        200:
+          description: "Successful operation"
+        400:
+          description: "Invalid bookId supplied"
+        404:
+          description: "Book not found"
+
+    delete:
+      tags:
+        - 'Books'
+      summary: ''
+      description: ''
+      operationId: 'deleteBook'
+      parameters:
+        - name: 'bookId'
+          in: 'path'
+          description: 'id of book to remove'
+          required: true
+          schema:
+            type: 'integer'
+      responses:
+        400:
+          description: "Invalid bookId supplied"
+        404:
+          description: "Book not found"
+
+  /notes:
+    post:
+      tags:
+        - 'Notes'
+      summary: 'Adds a note'
+      description: ''
+      operationId: 'addNote'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Note'
+      responses:
+        405:
+          description: "Invalid input"
+
+    get:
+      tags:
+        - 'Notes'
+      summary: 'Find note'
+      description: 'Finds all notes'
+      operationId: 'getAllNotes'
+      responses:
+        404:
+          description: "Notes (s) not found"
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+
+  /notes/{noteId}:
+    get:
+      tags:
+        - 'Notes'
+      summary: 'Find Note by noteId'
+      description: ''
+      operationId: 'findNoteById'
+      parameters:
+        - name: 'noteId'
+          in: 'path'
+          required: true
+          description: 'noteId'
+          schema:
+            type: 'integer'
+            format: 'int64'
+      responses:
+        200:
+          description: "Successful operation"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Note not found"
+
+    put:
+      tags:
+        - 'Notes'
+      summary: ''
+      description: ''
+      operationId: 'updateNote'
+      parameters:
+        - name: 'noteId'
+          in: 'path'
+          description: 'Id of note'
+          required: true
+          schema:
+            type: 'integer'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  '#/components/schemas/Note'
+      responses:
+        200:
+          description: "Successful operation"
+        400:
+          description: "Invalid noteId supplied"
+        404:
+          description: "Note not found"
+
+    delete:
+      tags:
+        - 'Notes'
+      summary: ''
+      description: ''
+      operationId: 'deleteNote'
+      parameters:
+        - name: 'noteId'
+          in: 'path'
+          description: 'id of note to remove'
+          required: true
+          schema:
+            type: 'integer'
+      responses:
+        400:
+          description: "Invalid noteId supplied"
+        404:
+          description: "Note not found"
+
+components:
+  schemas:
+    Book:
+      type: 'object'
+      properties:
+        bookId:
+          type: 'integer'
+          format: 'int64'
+        title:
+          type: 'string'
+        author:
+          type: 'string'
+        Note:
+          type: array
+          items:
+            example:
+              - note1
+              - note2
+              - note3
+      required:
+        - 'bookId'
+        - 'title'
+        - 'author'
+        - ''
+    Note:
+      type: 'object'
+      properties:
+        noteId:
+          type: 'integer'
+          format: 'int64'
+        bookId:
+          type: 'integer'
+        note:
+          type: 'string'
+      required:
+        - 'bookId'
+        - 'noteId'
+        - 'note' 
