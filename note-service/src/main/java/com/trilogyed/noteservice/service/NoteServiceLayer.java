@@ -16,7 +16,7 @@ public class NoteServiceLayer {
                 if(note.getBookId() == 0) note.setBookId(noteReceived.getBookId());
                 noteDao.updateNote(noteId, note);
             } else {
-                // Throw an exception and return a message if the note does not exist.
+                throw new RuntimeException("That note could not be updated since it has not been created.");
             }
     }
 }

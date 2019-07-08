@@ -4,7 +4,7 @@ import com.trilogyed.notequeueconsumer.util.messages.Note;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "note-service", path = "/notes")
+@FeignClient(name = "${feign.name}", url = "${feign.url}", path = "${feign.note.path}")
 public interface NoteClient {
     @PostMapping
     Note createNote(@RequestBody Note note);
