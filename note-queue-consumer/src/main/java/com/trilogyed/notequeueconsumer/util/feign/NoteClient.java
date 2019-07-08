@@ -2,16 +2,13 @@ package com.trilogyed.notequeueconsumer.util.feign;
 
 import com.trilogyed.notequeueconsumer.util.messages.Note;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "note-service")
+@FeignClient(name = "note-service", path = "/notes")
 public interface NoteClient {
-    @RequestMapping(value = "/notes", method = RequestMethod.POST)
+    @PostMapping
     Note createNote(@RequestBody Note note);
 
-    @RequestMapping(value = "/notes/{id}", method = RequestMethod.PUT)
+    @PutMapping("{id}")
     void updateNote(@PathVariable("id") int noteId, @RequestBody Note note);
 }
