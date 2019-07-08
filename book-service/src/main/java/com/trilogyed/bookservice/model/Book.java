@@ -1,5 +1,7 @@
 package com.trilogyed.bookservice.model;
 
+import java.util.Objects;
+
 public class Book {
 
     private int bookId;
@@ -40,18 +42,18 @@ public class Book {
         this.author = author;
     }
 
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        if (!super.equals(object)) return false;
-        Book book = (Book) object;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
         return bookId == book.bookId &&
                 title.equals(book.title) &&
                 author.equals(book.author);
     }
 
+    @Override
     public int hashCode() {
-        return java.util.Objects.hash(super.hashCode(), bookId, title, author);
+        return Objects.hash(bookId, title, author);
     }
-
 }
