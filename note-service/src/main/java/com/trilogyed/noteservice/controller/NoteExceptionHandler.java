@@ -1,5 +1,10 @@
 package com.trilogyed.noteservice.controller;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+
+import com.trilogyed.noteservice.exception.NotFoundException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.hateoas.VndErrors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +16,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestControllerAdvice
 public class NoteExceptionHandler {
 
+    /**
+     * Exception when method arguments are not valid
+     *
+     * @param e
+     * @param request
+     * @return Httpstatus code of 422
+     */
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseEntity<VndErrors> validationError(MethodArgumentNotValidException e, WebRequest request) {
@@ -41,4 +54,124 @@ public class NoteExceptionHandler {
         return responseEntity;
     }
 
+    /**
+     * IllegalArgumentException
+     *
+     * @param e
+     * @param request
+     * @return Httpstatus code of 422
+     */
+    @ExceptionHandler(value = {IllegalArgumentException.class})
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity<VndErrors> outOfRangeException(IllegalArgumentException e, WebRequest request) {
+        VndErrors error = new VndErrors(request.toString(), e.getMessage());
+        ResponseEntity<VndErrors> responseEntity = new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
+        return responseEntity;
+    }
+
+    /**
+     * NumberFormatException
+     *
+     * @param e
+     * @param request
+     * @return Httpstatus code of 422
+     */
+    @ExceptionHandler(value = {NumberFormatException.class})
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity<VndErrors> numberFormatException(NumberFormatException e, WebRequest request) {
+        VndErrors error = new VndErrors(request.toString(), "Parameter must be a whole number. " + e.getMessage());
+        ResponseEntity<VndErrors> responseEntity = new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
+        return responseEntity;
+    }
+
+    /**
+     * DataAccessException
+     *
+     * @param e
+     * @param request
+     * @return Httpstatus code of 422
+     */
+    @ExceptionHandler(value = {DataAccessException.class})
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity<VndErrors> dataAccessException(DataAccessException e, WebRequest request) {
+        VndErrors error = new VndErrors(request.toString(), "An internal error occured" + e.getMessage());
+        ResponseEntity<VndErrors> responseEntity = new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
+        return responseEntity;
+    }
+
+    /**
+     * NotFoundException
+     *
+     * @param e
+     * @param request
+     * @return
+     */
+    @ExceptionHandler(value = {NotFoundException.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<VndErrors> notFoundException(NotFoundException e, WebRequest request) {
+        VndErrors error = new VndErrors(request.toString(), "Not found : " + e.getMessage());
+        ResponseEntity<VndErrors> responseEntity = new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return responseEntity;
+    }
+
+
+    /**
+     * JsonParseException
+     *
+     * @param e
+     * @param request
+     * @return Httpstatus code of 422
+     */
+    @ExceptionHandler(value = {JsonParseException.class})
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity<VndErrors> jsonParseException(JsonParseException e, WebRequest request) {
+        VndErrors error = new VndErrors(request.toString(), "problem in Json format " + e.getMessage());
+        ResponseEntity<VndErrors> responseEntity = new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return responseEntity;
+    }
+
+    /**
+     * InvalidFormatException
+     *
+     * @param e
+     * @param request
+     * @return Httpstatus code of 422
+     */
+    @ExceptionHandler(value = {InvalidFormatException.class})
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity<VndErrors> invalidFormatException(InvalidFormatException e, WebRequest request) {
+        VndErrors error = new VndErrors(request.toString(), "Format is not correct  " + e.getMessage());
+        ResponseEntity<VndErrors> responseEntity = new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
+        return responseEntity;
+    }
+
+    /**
+     * Exception when normal flow of program breaks
+     *
+     * @param e
+     * @param request
+     * @return Httpstatus code of 400
+     */
+    @ExceptionHandler(value = {Exception.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<VndErrors> badRequest(Exception e, WebRequest request) {
+        VndErrors error = new VndErrors(request.toString(), e.getMessage());
+        ResponseEntity<VndErrors> responseEntity = new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return responseEntity;
+    }
+
+    /**
+     * DateTimeParseException
+     *
+     * @param e
+     * @param request
+     * @return Httpstatus code of 422
+     */
+    @ExceptionHandler(value = {DateTimeParseException.class})
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity<VndErrors> dateTimeParseException(DateTimeParseException e, WebRequest request) {
+        VndErrors error = new VndErrors(request.toString(), "Format is not correct  " + e.getMessage());
+        ResponseEntity<VndErrors> responseEntity = new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
+        return responseEntity;
+    }
 }
