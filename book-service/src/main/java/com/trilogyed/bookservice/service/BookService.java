@@ -75,6 +75,11 @@ public class BookService {
 
     public void deleteBook(int id) {
         dao.deleteBook(id);
+        try {
+            client.getNotesByBook(id).forEach(note -> client.deleteNote(note.getNoteId()));
+        } catch (Exception e) {
+            System.out.println(e.getClass());
+        }
     }
 
     public void updateBook(BookViewModel bookViewModel) {
