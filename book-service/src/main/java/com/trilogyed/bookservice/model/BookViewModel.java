@@ -58,8 +58,7 @@ public class BookViewModel {
         BookViewModel that = (BookViewModel) o;
         return bookId == that.bookId &&
                 title.equals(that.title) &&
-                author.equals(that.author) &&
-                Objects.equals(notes, that.notes);
+                author.equals(that.author);
     }
 
     @Override
