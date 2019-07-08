@@ -5,23 +5,18 @@ import com.trilogyed.noteservice.model.Note;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 public class NoteServiceLayer {
     @Autowired
     private NoteDao noteDao;
 
     public void updateNote(int noteId, Note note) {
-        List<Note> notesById = noteDao.getNotesByBook(note.getBookId());
-        boolean hasNote = false;
-        for(Note n : notesById) {
-            if (n.getNoteId() == noteId) hasNote = true;
-        }
-        if(notesById.size() != 0 && hasNote) {
-            noteDao.updateNote(noteId, note);
-        } else {
-            throw new RuntimeException("That note cannot be updated.");
-        }
+            Note noteReceived = noteDao.getNote(noteId);
+            if(noteReceived != null) {
+                if(note.getBookId() == 0) note.setBookId(noteReceived.getBookId());
+                noteDao.updateNote(noteId, note);
+            } else {
+                // Throw an exception and return a message if the note does not exist.
+            }
     }
 }
