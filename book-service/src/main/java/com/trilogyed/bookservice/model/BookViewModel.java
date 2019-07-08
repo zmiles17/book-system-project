@@ -5,6 +5,7 @@ import com.trilogyed.bookservice.util.notes.Note;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Objects;
 
 public class BookViewModel {
     private int bookId;
@@ -46,5 +47,21 @@ public class BookViewModel {
 
     public void setNotes(List<Note> notes) {
         this.notes = notes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookViewModel that = (BookViewModel) o;
+        return bookId == that.bookId &&
+                title.equals(that.title) &&
+                author.equals(that.author) &&
+                Objects.equals(notes, that.notes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bookId, title, author, notes);
     }
 }
