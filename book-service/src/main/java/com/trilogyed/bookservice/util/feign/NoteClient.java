@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "${feign.name}", url = "${feign.url}", path = "${feign.note.path}")
+@FeignClient(name = "note-service", path = "/notes")
 public interface NoteClient {
 
     @GetMapping("book/{book_id}")
