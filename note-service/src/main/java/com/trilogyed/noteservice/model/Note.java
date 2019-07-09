@@ -1,6 +1,5 @@
 package com.trilogyed.noteservice.model;
 
-import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.Objects;
 
