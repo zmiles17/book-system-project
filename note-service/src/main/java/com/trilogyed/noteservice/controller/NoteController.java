@@ -54,9 +54,6 @@ public class NoteController {
     public void updateNote(@PathVariable("id") int noteId,
                            @RequestBody @Valid Note note) {
         service.updateNote(noteId, note);
-        if (noteId != note.getNoteId()) {
-            throw new IllegalArgumentException("Note ID on path must match the ID in the Note object");
-        }
     }
 
     @DeleteMapping("/{id}")
