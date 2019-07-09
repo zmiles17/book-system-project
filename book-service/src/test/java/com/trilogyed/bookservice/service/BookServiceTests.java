@@ -64,7 +64,7 @@ public class BookServiceTests {
 
     private void setUpRestClientMock() {
 
-        noteClient = mock(NoteClient.class);
+       // noteClient = mock(NoteClient.class);
 
         Note note = new Note();
         note.setNote("yes!");

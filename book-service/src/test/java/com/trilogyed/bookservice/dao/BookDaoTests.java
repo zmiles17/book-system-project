@@ -31,7 +31,7 @@ public class BookDaoTests {
     @Test
     public void addGetDeleteBook() {
 
-        Book book = new Book(2, "Title", "Author");
+        Book book = new Book("Title", "Author");
 
         book = dao.addBook(book);
 
@@ -50,10 +50,10 @@ public class BookDaoTests {
     @Test
     public void getAllBooks() {
 
-        Book book = new Book(2, "Title", "Author");
+        Book book = new Book( "Title", "Author");
         dao.addBook(book);
 
-        book = new Book(5, "Another Title", "Another Author");
+        book = new Book("Another Title", "Another Author");
         dao.addBook(book);
 
         List<Book> books = dao.getAllBooks();
@@ -65,7 +65,7 @@ public class BookDaoTests {
     @Test
     public void updateBook() {
 
-        Book book = new Book(2, "Title", "Author");
+        Book book = new Book( "Title", "Author");
         book = dao.addBook(book);
 
         book.setTitle("Different Title");
